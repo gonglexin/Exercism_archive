@@ -4,8 +4,11 @@ defmodule Bob do
       String.trim(input) == "" ->
         "Fine. Be that way!"
 
-      input =~ ~r/\p{Lu}/ && String.upcase(input) == input ->
-        if input =~ ~r/\?$/, do: "Calm down, I know what I'm doing!", else: "Whoa, chill out!"
+      all_upcase?(input) && has_letter?(input) && String.ends_with?(input, "?") ->
+        "Calm down, I know what I'm doing!"
+
+      all_upcase?(input) && has_letter?(input) ->
+        "Whoa, chill out!"
 
       String.ends_with?(input, "?") ->
         "Sure."
@@ -13,5 +16,13 @@ defmodule Bob do
       true ->
         "Whatever."
     end
+  end
+
+  defp all_upcase?(string) do
+    String.upcase(string) == string
+  end
+
+  defp has_letter?(string) do
+    String.upcase(string) != String.downcase(string)
   end
 end
